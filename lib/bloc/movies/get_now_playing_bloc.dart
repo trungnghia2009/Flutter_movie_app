@@ -1,15 +1,15 @@
-import 'package:flutterappmovie/model/movie_response.dart';
-import '../repository/repository.dart';
-import 'package:rxdart/rxdart.dart';
+import 'package:flutterappmovie/model/movies/movie_response.dart';
+import '../../repository/movies_repository.dart';
+import 'package:rxdart/subjects.dart';
 
-class MoviesListBloc {
+class NowPlayingListBloc {
   final MovieRepository _repository = MovieRepository();
   // TODO: BehaviorSubject assign type is MovieResponse
   final BehaviorSubject<MovieResponse> _subject =
       BehaviorSubject<MovieResponse>();
 
-  getMovies() async {
-    MovieResponse response = await _repository.getMovies();
+  getNowPlaying() async {
+    MovieResponse response = await _repository.getPlayingMovies();
     _subject.sink.add(response);
   }
 
@@ -22,4 +22,4 @@ class MoviesListBloc {
   }
 }
 
-final moviesBloc = MoviesListBloc();
+final nowPlayingMoviesBloc = NowPlayingListBloc();

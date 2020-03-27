@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutterappmovie/model/movie_response.dart';
-import '../repository/repository.dart';
+import 'package:flutterappmovie/model/movies/movie_response.dart';
+import '../../repository/movies_repository.dart';
 import 'package:rxdart/subjects.dart';
 
 class MoviesListByGenreBloc {

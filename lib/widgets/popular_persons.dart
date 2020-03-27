@@ -1,26 +1,27 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterappmovie/bloc/get_persons_bloc.dart';
+import 'package:flutterappmovie/bloc/movies/get_popular_persons.dart';
 import 'package:flutterappmovie/model/person_response.dart';
 import 'package:flutterappmovie/widgets/utility_widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../model/person.dart';
 import '../style/theme.dart' as Style;
 
-class PersonsList extends StatefulWidget {
+class PopularPersons extends StatefulWidget {
   @override
-  _PersonsListState createState() => _PersonsListState();
+  _PopularPersonsState createState() => _PopularPersonsState();
 }
 
-class _PersonsListState extends State<PersonsList> {
+class _PopularPersonsState extends State<PopularPersons> {
   @override
   void initState() {
     super.initState();
-    personsBloc..getPersons();
+    popularPersonsBloc..getPersons();
   }
 
   @override
   Widget build(BuildContext context) {
+    print('PopularPersons() build');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -28,13 +29,13 @@ class _PersonsListState extends State<PersonsList> {
           height: 10,
         ),
         utilityWidgets.buildTopTitle(
-          title: "TRENDING PERSONS ON THIS WEEK",
+          title: "POPULAR PEOPLE",
           onTap: () {
             // Navigate to all list
           },
         ),
         StreamBuilder<PersonResponse>(
-          stream: personsBloc.subject.stream,
+          stream: popularPersonsBloc.subject.stream,
           builder: (context, AsyncSnapshot<PersonResponse> snapshot) {
             if (snapshot.hasData) {
               if (snapshot.data.error != null &&
@@ -107,7 +108,7 @@ class _PersonsListState extends State<PersonsList> {
                   ),
                   Text(
                     persons[index].name,
-                    maxLines: 2,
+                    maxLines: 1,
                     style: TextStyle(
                       height: 1.4,
                       color: Colors.white,

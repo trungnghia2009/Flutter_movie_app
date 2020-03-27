@@ -1,9 +1,9 @@
 import 'package:flutterappmovie/model/genre_response.dart';
-import '../repository/repository.dart';
+import 'package:flutterappmovie/repository/shows_repository.dart';
 import 'package:rxdart/subjects.dart';
 
 class GenresListBloc {
-  final MovieRepository _repository = MovieRepository();
+  final ShowRepository _repository = ShowRepository();
   // TODO: BehaviorSubject assign type is GenreResponse
   final BehaviorSubject<GenreResponse> _subject =
       BehaviorSubject<GenreResponse>();

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutterappmovie/bloc/get_movies_byGenre_bloc.dart';
-import '../model/genre.dart';
-import '../style/theme.dart' as Style;
-import '../widgets/genre_movies.dart';
+import 'package:flutterappmovie/bloc/movies/get_movies_byGenre_bloc.dart';
+import '../../model/genre.dart';
+import '../../style/theme.dart' as Style;
+import 'movies_by_genre.dart';
+import '../utility_widgets.dart';
 
 class GenresList extends StatefulWidget {
   final List<Genre> genres;
@@ -47,37 +48,40 @@ class _GenresListState extends State<GenresList>
         child: Scaffold(
           backgroundColor: Style.Colors.mainColor,
           appBar: PreferredSize(
-            child: AppBar(
-              backgroundColor: Style.Colors.mainColor,
-              bottom: TabBar(
-                controller: _tabController,
-                indicatorColor: Style.Colors.secondColor,
-                indicatorSize: TabBarIndicatorSize.tab,
-                indicatorWeight: 3.0,
-                unselectedLabelColor: Style.Colors.titleColor,
-                labelColor: Colors.white,
-                isScrollable: true,
-                tabs: genres.map((genre) {
-                  return Container(
-                    padding: EdgeInsets.only(bottom: 15, top: 10),
-                    child: Text(
-                      genre.name.toUpperCase(),
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: AppBar(
+                backgroundColor: Style.Colors.mainColor,
+                bottom: TabBar(
+                  controller: _tabController,
+                  indicatorColor: Style.Colors.secondColor,
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  indicatorWeight: 3.0,
+                  unselectedLabelColor: Style.Colors.titleColor,
+                  labelColor: Colors.white,
+                  isScrollable: true,
+                  tabs: genres.map((genre) {
+                    return Container(
+                      padding: EdgeInsets.only(bottom: 10, top: 0),
+                      child: Text(
+                        genre.name.toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  );
-                }).toList(),
+                    );
+                  }).toList(),
+                ),
               ),
             ),
-            preferredSize: Size.fromHeight(50),
+            preferredSize: Size.fromHeight(35),
           ),
           body: TabBarView(
             controller: _tabController,
             physics: NeverScrollableScrollPhysics(),
             children: genres.map((genre) {
-              return GenreMovies(genreId: genre.id);
+              return MoviesByGenre(genreId: genre.id);
             }).toList(),
           ),
         ),

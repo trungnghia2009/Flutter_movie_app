@@ -2,50 +2,60 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutterappmovie/bloc/get_movies_byGenre_bloc.dart';
+import 'package:flutterappmovie/bloc/movies/get_popular_movies_bloc.dart';
+import 'package:flutterappmovie/model/movies/movie.dart';
 import 'package:flutterappmovie/widgets/utility_widgets.dart';
-import '../model/movie_response.dart';
-import '../model/movie.dart';
-import '../style/theme.dart' as Style;
+import '../../style/theme.dart' as Style;
+import '../../model/movies/movie_response.dart';
 
-class GenreMovies extends StatefulWidget {
-  final int genreId;
-  GenreMovies({Key key, @required this.genreId}) : super(key: key);
-
+class PopularMovies extends StatefulWidget {
   @override
-  _GenreMoviesState createState() => _GenreMoviesState(genreId);
+  _PopularMoviesState createState() => _PopularMoviesState();
 }
 
-class _GenreMoviesState extends State<GenreMovies> {
-  final int genreId;
-  _GenreMoviesState(this.genreId);
-
+class _PopularMoviesState extends State<PopularMovies> {
   @override
   void initState() {
     super.initState();
-    moviesByGenreBloc..getMoviesByGenre(genreId);
+    popularMoviesBloc..getMovies();
   }
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<MovieResponse>(
-      stream: moviesByGenreBloc.subject.stream,
-      builder: (context, AsyncSnapshot<MovieResponse> snapshot) {
-        if (snapshot.hasData) {
-          if (snapshot.data.error != null && snapshot.data.error.length > 0) {
-            return utilityWidgets.buildErrorWidget(snapshot.data.error);
-          }
-          return _buildMoviesByGenre(snapshot.data);
-        } else if (snapshot.hasError) {
-          return utilityWidgets.buildErrorWidget(snapshot.error);
-        } else {
-          return utilityWidgets.buildLoadingWidget(270);
-        }
-      },
+    print('PopularMovies() build');
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        SizedBox(
+          height: 10,
+        ),
+        utilityWidgets.buildTopTitle(
+          title: "POPULAR MOVIES",
+          onTap: () {
+            // Navigate to all list
+          },
+        ),
+        StreamBuilder<MovieResponse>(
+          stream: popularMoviesBloc.subject.stream,
+          builder: (context, AsyncSnapshot<MovieResponse> snapshot) {
+            if (snapshot.hasData) {
+              if (snapshot.data.error != null &&
+                  snapshot.data.error.length > 0) {
+                return utilityWidgets.buildErrorWidget(snapshot.data.error);
+              }
+              return _buildTopMovieWidget(snapshot.data);
+            } else if (snapshot.hasError) {
+              return utilityWidgets.buildErrorWidget(snapshot.error);
+            } else {
+              return utilityWidgets.buildLoadingWidget(270);
+            }
+          },
+        )
+      ],
     );
   }
 
-  Widget _buildMoviesByGenre(MovieResponse data) {
+  Widget _buildTopMovieWidget(MovieResponse data) {
     List<Movie> movies = data.movies;
     if (movies.length == 0) {
       return Container(
@@ -61,7 +71,7 @@ class _GenreMoviesState extends State<GenreMovies> {
           itemBuilder: (context, index) {
             return Padding(
               padding: EdgeInsets.only(
-                top: 10,
+                top: 2,
                 bottom: 10,
                 right: 10,
               ),
@@ -74,11 +84,10 @@ class _GenreMoviesState extends State<GenreMovies> {
                           decoration: BoxDecoration(
                             color: Style.Colors.secondColor,
                             borderRadius:
-                                BorderRadius.all(Radius.circular(2.0)),
+                                BorderRadius.all(Radius.circular(8.0)),
                             shape: BoxShape.rectangle,
                           ),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Icon(
                                 EvaIcons.filmOutline,
@@ -92,7 +101,8 @@ class _GenreMoviesState extends State<GenreMovies> {
                           width: 120,
                           height: 180,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(2)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(8.0)),
                             shape: BoxShape.rectangle,
                             image: DecorationImage(
                                 image: CachedNetworkImageProvider(

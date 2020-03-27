@@ -5,6 +5,7 @@ final utilityWidgets = UtilityWidgets();
 
 class UtilityWidgets {
   Widget buildLoadingWidget(double height) {
+    print('Loading.....');
     return Container(
       height: height,
       child: Center(

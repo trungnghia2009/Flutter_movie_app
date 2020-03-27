@@ -1,29 +1,28 @@
-import 'dart:math';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutterappmovie/bloc/get_movies_bloc.dart';
-import 'package:flutterappmovie/model/movie.dart';
+import 'package:flutterappmovie/bloc/shows/get_on_the_air_shows_bloc.dart';
+import 'package:flutterappmovie/model/shows/show.dart';
+import 'package:flutterappmovie/model/shows/show_response.dart';
 import 'package:flutterappmovie/widgets/utility_widgets.dart';
-import '../style/theme.dart' as Style;
-import '../model/movie_response.dart';
+import '../../style/theme.dart' as Style;
 
-class TopMovies extends StatefulWidget {
+class OnTheAirShows extends StatefulWidget {
   @override
-  _TopMoviesState createState() => _TopMoviesState();
+  _OnTheAirShowsState createState() => _OnTheAirShowsState();
 }
 
-class _TopMoviesState extends State<TopMovies> {
+class _OnTheAirShowsState extends State<OnTheAirShows> {
   @override
   void initState() {
     super.initState();
-    moviesBloc..getMovies();
+    onTheAirShowsBloc..getShows();
   }
 
   @override
   Widget build(BuildContext context) {
+    print('OnTheAirShows() build');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -31,14 +30,14 @@ class _TopMoviesState extends State<TopMovies> {
           height: 10,
         ),
         utilityWidgets.buildTopTitle(
-          title: "TOP RATED MOVIES",
+          title: "ON THE AIR TV SHOWS",
           onTap: () {
             // Navigate to all list
           },
         ),
-        StreamBuilder<MovieResponse>(
-          stream: moviesBloc.subject.stream,
-          builder: (context, AsyncSnapshot<MovieResponse> snapshot) {
+        StreamBuilder<ShowResponse>(
+          stream: onTheAirShowsBloc.subject.stream,
+          builder: (context, AsyncSnapshot<ShowResponse> snapshot) {
             if (snapshot.hasData) {
               if (snapshot.data.error != null &&
                   snapshot.data.error.length > 0) {
@@ -56,9 +55,9 @@ class _TopMoviesState extends State<TopMovies> {
     );
   }
 
-  Widget _buildTopMovieWidget(MovieResponse data) {
-    List<Movie> movies = data.movies;
-    if (movies.length == 0) {
+  Widget _buildTopMovieWidget(ShowResponse data) {
+    List<Show> shows = data.shows;
+    if (shows.length == 0) {
       return Container(
         child: Text('No Movies'),
       );
@@ -68,7 +67,7 @@ class _TopMoviesState extends State<TopMovies> {
         padding: EdgeInsets.only(left: 10),
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: movies.length,
+          itemCount: shows.length,
           itemBuilder: (context, index) {
             return Padding(
               padding: EdgeInsets.only(
@@ -78,14 +77,14 @@ class _TopMoviesState extends State<TopMovies> {
               ),
               child: Column(
                 children: <Widget>[
-                  movies[index].poster == null
+                  shows[index].poster == null
                       ? Container(
                           width: 120,
                           height: 180,
                           decoration: BoxDecoration(
                             color: Style.Colors.secondColor,
                             borderRadius:
-                                BorderRadius.all(Radius.circular(2.0)),
+                                BorderRadius.all(Radius.circular(8.0)),
                             shape: BoxShape.rectangle,
                           ),
                           child: Column(
@@ -102,12 +101,13 @@ class _TopMoviesState extends State<TopMovies> {
                           width: 120,
                           height: 180,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(2)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(8.0)),
                             shape: BoxShape.rectangle,
                             image: DecorationImage(
                                 image: CachedNetworkImageProvider(
                                     "https://image.tmdb.org/t/p/w200/" +
-                                        movies[index].poster),
+                                        shows[index].poster),
                                 fit: BoxFit.cover),
                           ),
                         ),
@@ -117,7 +117,7 @@ class _TopMoviesState extends State<TopMovies> {
                   Container(
                     width: 100,
                     child: Text(
-                      movies[index].title,
+                      shows[index].title,
                       maxLines: 2,
                       style: TextStyle(
                           height: 1.4,
@@ -132,7 +132,7 @@ class _TopMoviesState extends State<TopMovies> {
                   Row(
                     children: <Widget>[
                       Text(
-                        movies[index].rating.toString(),
+                        shows[index].rating.toString(),
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 10,
@@ -144,7 +144,7 @@ class _TopMoviesState extends State<TopMovies> {
                       ),
                       RatingBar(
                         itemSize: 8.0,
-                        initialRating: movies[index].rating / 2,
+                        initialRating: shows[index].rating / 2,
                         direction: Axis.horizontal,
                         allowHalfRating: true,
                         itemCount: 5,
