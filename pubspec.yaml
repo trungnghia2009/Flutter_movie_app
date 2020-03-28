@@ -33,8 +33,6 @@ dependencies:
   cached_network_image: ^2.0.0
   flutter_spinkit: ^4.1.2
   url_launcher: ^5.4.2
-  flutterpackagemath:
-    path: F:\Flutter\Android\flutter_package_math
 
 dev_dependencies:
   flutter_test:

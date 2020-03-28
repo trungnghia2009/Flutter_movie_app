@@ -5,6 +5,7 @@ import 'package:flutterappmovie/screens/user_screen.dart';
 import '../style/theme.dart' as Style;
 import 'movies_screen.dart';
 import 'tv_shows_screen.dart';
+import '../screens/search_screen.dart';
 
 class TabsScreen extends StatefulWidget {
   @override
@@ -50,7 +51,9 @@ class _TabsScreenState extends State<TabsScreen> {
                 EvaIcons.searchOutline,
                 color: Colors.white,
               ),
-              onPressed: () {})
+              onPressed: () {
+                Navigator.of(context).pushNamed(SearchScreen.routeName);
+              })
         ],
       ),
       body: _selectedBody(_selectedIndex),

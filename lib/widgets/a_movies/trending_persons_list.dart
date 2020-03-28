@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterappmovie/bloc/movies/get_trending_persons_bloc.dart';
-import 'package:flutterappmovie/widgets/movies/trending_persons_by_time.dart';
+import 'package:flutterappmovie/widgets/a_movies/trending_persons_by_time.dart';
 import '../../model/person.dart';
 import '../../style/theme.dart' as Style;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

@@ -135,13 +135,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutterpackagemath:
-    dependency: "direct main"
-    description:
-      path: "F:\\Flutter\\Android\\flutter_package_math"
-      relative: false
-    source: path
-    version: "0.0.1"
   font_awesome_flutter:
     dependency: "direct main"
     description:

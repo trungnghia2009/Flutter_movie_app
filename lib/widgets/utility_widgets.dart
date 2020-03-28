@@ -1,4 +1,6 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../style/theme.dart' as Style;
 
 final utilityWidgets = UtilityWidgets();
@@ -7,6 +9,7 @@ class UtilityWidgets {
   Widget buildLoadingWidget(double height) {
     print('Loading.....');
     return Container(
+      color: Style.Colors.mainColor,
       height: height,
       child: Center(
         child: Column(
@@ -27,12 +30,15 @@ class UtilityWidgets {
   }
 
   Widget buildErrorWidget(String error) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text('Error occured: $error'),
-        ],
+    return Container(
+      color: Style.Colors.mainColor,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('Error occured: $error'),
+          ],
+        ),
       ),
     );
   }
@@ -65,6 +71,46 @@ class UtilityWidgets {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget buildEmptySearchScreen() {
+    return Container(
+      color: Style.Colors.mainColor,
+      child: Column(
+        children: <Widget>[
+          SizedBox(
+            height: 40,
+          ),
+          Icon(
+            Icons.search,
+            color: Style.Colors.titleColor,
+            size: 100,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            'Search Movies Database',
+            style: TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+              color: Style.Colors.titleColor,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Text(
+              'Find your favorite movies, TV shows, and people.',
+              style: TextStyle(
+                fontSize: 18,
+                color: Style.Colors.titleColor,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          )
+        ],
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'screens/movies_screen.dart';
 import 'screens/tabs_screen.dart';
+import 'screens/search_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,7 +16,8 @@ class MyApp extends StatelessWidget {
       ),
       home: TabsScreen(),
       routes: {
-        MoviesScreen.routeName: (context) => MoviesScreen(),
+        MoviesScreen.routeName: (ctx) => MoviesScreen(),
+        SearchScreen.routeName: (ctx) => SearchScreen(),
       },
     );
   }

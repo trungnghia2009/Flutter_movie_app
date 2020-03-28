@@ -17,7 +17,7 @@ class Show {
 
   Show.fromJson(Map<String, dynamic> json)
       : id = json['id'],
-        popularity = json['popularity'],
+        popularity = json['popularity'].toDouble(),
         title = json['name'],
         backPoster = json['backdrop_path'],
         poster = json['poster_path'],
