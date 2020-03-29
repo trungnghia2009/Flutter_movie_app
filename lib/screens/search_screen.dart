@@ -14,7 +14,7 @@ class _SearchScreenState extends State<SearchScreen>
     with SingleTickerProviderStateMixin {
   var _isViewList = true;
   var _searchValue = '';
-  TextEditingController _textEditingController;
+  final _textEditingController = TextEditingController();
   TabController _tabController;
   List<String> _searchTaps = ['Movies', 'TV Shows', 'People'];
 
@@ -26,12 +26,6 @@ class _SearchScreenState extends State<SearchScreen>
       if (_tabController.indexIsChanging) {
         print('changing tap................');
       }
-    });
-  }
-
-  Future<void> _refresh() async {
-    await Future.delayed(Duration.zero, () {
-      setState(() {});
     });
   }
 
@@ -66,6 +60,20 @@ class _SearchScreenState extends State<SearchScreen>
             autofocus: true,
           ),
           actions: <Widget>[
+            _searchValue != ''
+                ? IconButton(
+                    icon: Icon(Icons.close),
+                    onPressed: () {
+                      setState(() {
+                        _textEditingController.clear();
+                        _searchValue = '';
+                      });
+                    },
+                  )
+                : Container(),
+            SizedBox(
+              width: 20,
+            ),
             IconButton(
               icon:
                   _isViewList ? Icon(Icons.view_list) : Icon(Icons.view_column),
