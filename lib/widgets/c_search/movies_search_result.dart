@@ -44,7 +44,7 @@ class _MoviesSearchResultState extends State<MoviesSearchResult> {
   Widget build(BuildContext context) {
     print(widget.searchValue + " at MoviesSearchResult");
     return widget.searchValue == ''
-        ? utilityWidgets.buildEmptySearchScreen()
+        ? utilityWidgets.buildEmptySearchScreen('Search Movies', 'Find your favorite movies.')
         : StreamBuilder<MovieResponse>(
             stream: searchMoviesBloc.subject.stream,
             builder: (context, AsyncSnapshot<MovieResponse> snapshot) {
@@ -57,7 +57,7 @@ class _MoviesSearchResultState extends State<MoviesSearchResult> {
               } else if (snapshot.hasError) {
                 return utilityWidgets.buildErrorWidget(snapshot.error);
               } else {
-                return utilityWidgets.buildLoadingWidget(270);
+                return utilityWidgets.buildLoadingSearchWidget();
               }
             },
           );

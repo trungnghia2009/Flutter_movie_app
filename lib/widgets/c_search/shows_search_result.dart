@@ -44,7 +44,8 @@ class _ShowsSearchResultState extends State<ShowsSearchResult> {
   Widget build(BuildContext context) {
     print(widget.searchValue + " at ShowsSearchResult");
     return widget.searchValue == ''
-        ? utilityWidgets.buildEmptySearchScreen()
+        ? utilityWidgets.buildEmptySearchScreen(
+            'Search TV Shows', 'Find your favorite TV Shows.')
         : StreamBuilder<ShowResponse>(
             stream: searchShowsBloc.subject.stream,
             builder: (context, AsyncSnapshot<ShowResponse> snapshot) {
@@ -57,7 +58,7 @@ class _ShowsSearchResultState extends State<ShowsSearchResult> {
               } else if (snapshot.hasError) {
                 return utilityWidgets.buildErrorWidget(snapshot.error);
               } else {
-                return utilityWidgets.buildLoadingWidget(270);
+                return utilityWidgets.buildLoadingSearchWidget();
               }
             },
           );

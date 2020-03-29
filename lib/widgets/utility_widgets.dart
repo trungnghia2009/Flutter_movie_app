@@ -29,6 +29,28 @@ class UtilityWidgets {
     );
   }
 
+  Widget buildLoadingSearchWidget() {
+    print('Loading.....');
+    return Container(
+      padding: EdgeInsets.only(top: 100),
+      color: Style.Colors.mainColor,
+      child: Center(
+        child: Column(
+          children: <Widget>[
+            SizedBox(
+              height: 25,
+              width: 25,
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                strokeWidth: 4.0,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget buildErrorWidget(String error) {
     return Container(
       color: Style.Colors.mainColor,
@@ -75,7 +97,7 @@ class UtilityWidgets {
     );
   }
 
-  Widget buildEmptySearchScreen() {
+  Widget buildEmptySearchScreen(String title, String content) {
     return Container(
       color: Style.Colors.mainColor,
       child: Column(
@@ -92,7 +114,7 @@ class UtilityWidgets {
             height: 10,
           ),
           Text(
-            'Search Movies Database',
+            title,
             style: TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,
@@ -102,7 +124,7 @@ class UtilityWidgets {
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: Text(
-              'Find your favorite movies, TV shows, and people.',
+              content,
               style: TextStyle(
                 fontSize: 18,
                 color: Style.Colors.titleColor,

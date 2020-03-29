@@ -43,7 +43,7 @@ class _PeopleSearchResultState extends State<PeopleSearchResult> {
   Widget build(BuildContext context) {
     print(widget.searchValue + " at PeopleSearchResult");
     return widget.searchValue == ''
-        ? utilityWidgets.buildEmptySearchScreen()
+        ? utilityWidgets.buildEmptySearchScreen('Search People','Find your favorite people.')
         : StreamBuilder<PersonResponse>(
             stream: searchPeopleBloc.subject.stream,
             builder: (context, AsyncSnapshot<PersonResponse> snapshot) {
@@ -56,7 +56,7 @@ class _PeopleSearchResultState extends State<PeopleSearchResult> {
               } else if (snapshot.hasError) {
                 return utilityWidgets.buildErrorWidget(snapshot.error);
               } else {
-                return utilityWidgets.buildLoadingWidget(130);
+                return utilityWidgets.buildLoadingSearchWidget();
               }
             },
           );

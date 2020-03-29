@@ -39,6 +39,7 @@ class _SearchScreenState extends State<SearchScreen>
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomPadding: false,
         appBar: AppBar(
           backgroundColor: Style.Colors.mainColor,
           title: TextField(
@@ -99,34 +100,30 @@ class _SearchScreenState extends State<SearchScreen>
             preferredSize: Size.fromHeight(35),
           ),
         ),
-        body: RefreshIndicator(
-          onRefresh: _refresh,
-          child: TabBarView(
-            controller: _tabController,
-            physics: NeverScrollableScrollPhysics(),
-            children: _searchTaps.map((tap) {
-              switch (tap) {
-                case "Movies":
-                  return MoviesSearchResult(
-                    searchValue: _searchValue,
-                  );
-                  break;
-                case "TV Shows":
-                  return ShowsSearchResult(
-                    searchValue: _searchValue,
-                  );
-                  break;
-                case "People":
-                  return PeopleSearchResult(
-                    searchValue: _searchValue,
-                  );
-                  break;
-                default:
-                  return Container();
-                  break;
-              }
-            }).toList(),
-          ),
+        body: TabBarView(
+          controller: _tabController,
+          children: _searchTaps.map((tap) {
+            switch (tap) {
+              case "Movies":
+                return MoviesSearchResult(
+                  searchValue: _searchValue,
+                );
+                break;
+              case "TV Shows":
+                return ShowsSearchResult(
+                  searchValue: _searchValue,
+                );
+                break;
+              case "People":
+                return PeopleSearchResult(
+                  searchValue: _searchValue,
+                );
+                break;
+              default:
+                return Container();
+                break;
+            }
+          }).toList(),
         ),
       ),
     );
